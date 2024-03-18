@@ -9,17 +9,16 @@ export class CreateUserImplementation implements CreateUser {
   constructor(private readonly repository: CreateUserRepository) {}
 
   async create({ email, name, password, phone }: CreateUserDTO): Promise<User> {
-    try {
-      const user = await this.repository.create({
-        email,
-        name,
-        password,
-        phone,
-      });
+    await this.repository.findUserByEmail(email);
+    await this.repository.findUserByPhone(phone);
 
-      return user;
-    } catch (error) {
-      throw error;
-    }
+    const user = await this.repository.create({
+      email,
+      name,
+      password,
+      phone,
+    });
+
+    return user;
   }
 }
