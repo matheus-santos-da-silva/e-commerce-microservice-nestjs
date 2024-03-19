@@ -21,7 +21,7 @@ export class UserResponseViewModel {
     this.phone = phone;
   }
 
-  static toViewModel({ email, id, name, phone }: User): UserResponseViewModel {
-    return new UserResponseViewModel(email, id, name, phone);
+  static toViewModel({ id, email, name, phone }: User): UserResponseViewModel {
+    return new UserResponseViewModel(id, email, name, phone);
   }
 }
