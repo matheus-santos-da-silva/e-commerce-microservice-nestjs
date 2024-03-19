@@ -1,12 +1,22 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { CreateUserRepository } from 'src/data/protocols';
+import {
+  CreateUserRepository,
+  GetAllUsersRepository,
+} from 'src/data/protocols';
 import { CreateUserDTO } from 'src/domain/DTOS/create-user-dto';
 import { User } from 'src/domain/models/user';
 import { PrismaService } from '../config/prisma.service';
 
 @Injectable()
-export class UsersPrismaRepository implements CreateUserRepository {
+export class UsersPrismaRepository
+  implements CreateUserRepository, GetAllUsersRepository
+{
   constructor(private readonly prisma: PrismaService) {}
+
+  async getAll(): Promise<User[]> {
+    const users = await this.prisma.user.findMany({});
+    return users;
+  }
 
   async findUserByEmail(email: string): Promise<User> {
     const user = await this.prisma.user.findFirst({
