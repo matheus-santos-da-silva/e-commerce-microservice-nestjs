@@ -1,17 +1,43 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   CreateUserRepository,
   GetAllUsersRepository,
+  UpdateUserRepository,
 } from 'src/data/protocols';
 import { CreateUserDTO } from 'src/domain/DTOS/create-user-dto';
 import { User } from 'src/domain/models/user';
 import { PrismaService } from '../config/prisma.service';
+import { UpdateUserDTO } from 'src/domain/DTOS/update-user-dto';
 
 @Injectable()
 export class UsersPrismaRepository
-  implements CreateUserRepository, GetAllUsersRepository
+  implements CreateUserRepository, GetAllUsersRepository, UpdateUserRepository
 {
   constructor(private readonly prisma: PrismaService) {}
+
+  async update(id: string, user: UpdateUserDTO): Promise<User> {
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: user,
+    });
+
+    return updatedUser;
+  }
+
+  async findUserById(id: string): Promise<User> {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) throw new NotFoundException('User was not found');
+    return user;
+  }
 
   async getAll(): Promise<User[]> {
     const users = await this.prisma.user.findMany({});
