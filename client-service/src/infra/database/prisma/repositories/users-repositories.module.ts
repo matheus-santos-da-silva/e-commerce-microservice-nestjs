@@ -4,6 +4,7 @@ import {
   CreateUserRepository,
   UpdateUserRepository,
   GetAllUsersRepository,
+  DeleteUserRepository,
 } from '../../../../data/protocols/index';
 import { UsersPrismaRepository } from './user-prisma-repository';
 
@@ -22,7 +23,16 @@ import { UsersPrismaRepository } from './user-prisma-repository';
       provide: UpdateUserRepository,
       useClass: UsersPrismaRepository,
     },
+    {
+      provide: DeleteUserRepository,
+      useClass: UsersPrismaRepository,
+    },
   ],
-  exports: [CreateUserRepository, GetAllUsersRepository, UpdateUserRepository],
+  exports: [
+    CreateUserRepository,
+    GetAllUsersRepository,
+    UpdateUserRepository,
+    DeleteUserRepository,
+  ],
 })
 export class UserRepositoryModule {}
