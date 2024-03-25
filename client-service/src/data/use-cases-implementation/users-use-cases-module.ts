@@ -4,6 +4,8 @@ import {
   DeleteUser,
   GetAllUsers,
   UpdateUser,
+  SignInUser,
+  GetUserById,
 } from 'src/domain/use-cases/';
 import { UserRepositoryModule } from 'src/infra/database/prisma/repositories/users-repositories.module';
 import {
@@ -11,6 +13,8 @@ import {
   GetAllUsersImplementation,
   UpdateUserImplementation,
   DeleteUserImplementation,
+  SignInUserImplementation,
+  GetUserByIdImplementation,
 } from './';
 
 @Module({
@@ -32,7 +36,22 @@ import {
       provide: DeleteUser,
       useClass: DeleteUserImplementation,
     },
+    {
+      provide: SignInUser,
+      useClass: SignInUserImplementation,
+    },
+    {
+      provide: GetUserById,
+      useClass: GetUserByIdImplementation,
+    },
   ],
-  exports: [CreateUser, GetAllUsers, UpdateUser, DeleteUser],
+  exports: [
+    CreateUser,
+    GetAllUsers,
+    UpdateUser,
+    DeleteUser,
+    SignInUser,
+    GetUserById,
+  ],
 })
 export class UsersUseCasesModule {}

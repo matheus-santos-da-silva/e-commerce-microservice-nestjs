@@ -1,12 +1,10 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import {
   CreateUserRepository,
   DeleteUserRepository,
   GetAllUsersRepository,
+  GetUserByFieldsRepository,
+  GetUserByIdRepository,
   UpdateUserRepository,
 } from 'src/data/protocols';
 import { CreateUserDTO } from 'src/domain/DTOS/create-user-dto';
@@ -20,9 +18,37 @@ export class UsersPrismaRepository
     CreateUserRepository,
     GetAllUsersRepository,
     UpdateUserRepository,
-    DeleteUserRepository
+    DeleteUserRepository,
+    GetUserByFieldsRepository,
+    GetUserByIdRepository
 {
   constructor(private readonly prisma: PrismaService) {}
+
+  async getById(id: string): Promise<User> {
+    const user = await this.prisma.user.findFirst({
+      where: { id },
+    });
+
+    return user;
+  }
+
+  async getUserByEmail(email: string): Promise<User | null> {
+    const user = await this.prisma.user.findFirst({
+      where: { email },
+    });
+
+    if (!user) return null;
+    return user;
+  }
+
+  async getUserByPhone(phone: string): Promise<User | null> {
+    const user = await this.prisma.user.findFirst({
+      where: { phone },
+    });
+
+    if (!user) return null;
+    return user;
+  }
 
   async delete(id: string): Promise<void> {
     await this.prisma.user.delete({
@@ -37,17 +63,6 @@ export class UsersPrismaRepository
     });
 
     return updatedUser;
-  }
-
-  async findUserById(id: string): Promise<User> {
-    const user = await this.prisma.user.findFirst({
-      where: {
-        id,
-      },
-    });
-
-    if (!user) throw new NotFoundException('User was not found');
-    return user;
   }
 
   async getAll(): Promise<User[]> {

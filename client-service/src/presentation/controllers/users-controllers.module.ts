@@ -4,6 +4,8 @@ import {
   CreateUserController,
   DeleteUserController,
   GetAllUsersController,
+  GetUserByIdController,
+  SignInUserController,
   UpdateUserController,
 } from './';
 
@@ -14,6 +16,8 @@ import {
     GetAllUsersController,
     UpdateUserController,
     DeleteUserController,
+    SignInUserController,
+    GetUserByIdController,
   ],
 })
 export class UsersControllersModule {}
