@@ -12,6 +12,7 @@ async function bootstrap() {
     .setTitle('Client-Service')
     .setDescription('Client Microservice of E-commerce')
     .setVersion('1')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
