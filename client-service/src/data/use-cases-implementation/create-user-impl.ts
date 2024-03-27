@@ -5,12 +5,14 @@ import { CreateUser } from 'src/domain/use-cases/';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { encryptingPass } from '../utils/encrypt-pass';
 import { GetUserByFieldsRepository } from '../protocols';
+import { PubSubService } from 'src/infra/messaging/redis/pubsub.service';
 
 @Injectable()
 export class CreateUserImplementation implements CreateUser {
   constructor(
     private readonly repository: CreateUserRepository,
     private readonly getUserRepository: GetUserByFieldsRepository,
+    private readonly messagingService: PubSubService,
   ) {}
 
   async create({ email, name, password, phone }: CreateUserDTO): Promise<User> {
@@ -30,6 +32,15 @@ export class CreateUserImplementation implements CreateUser {
       password: hashPassword,
       phone,
     });
+
+    await this.messagingService.publish(
+      'create-user',
+      {
+        email: user.email,
+        id: user.id,
+      },
+      'users',
+    );
 
     return user;
   }
