@@ -4,11 +4,13 @@ import {
   CreateProduct,
   GetAllProducts,
   GetProductById,
+  UpdateProduct,
 } from 'src/domain/use-cases/products';
 import {
   CreateProductImplementation,
   GetAllProductsImplementation,
   GetProductByIdImplementation,
+  UpdateProductImplementation,
 } from './';
 
 @Module({
@@ -26,7 +28,11 @@ import {
       provide: GetProductById,
       useClass: GetProductByIdImplementation,
     },
+    {
+      provide: UpdateProduct,
+      useClass: UpdateProductImplementation,
+    },
   ],
-  exports: [CreateProduct, GetAllProducts, GetProductById],
+  exports: [CreateProduct, GetAllProducts, GetProductById, UpdateProduct],
 })
 export class ProductsUseCasesModule {}

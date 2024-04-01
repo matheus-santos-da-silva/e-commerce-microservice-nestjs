@@ -4,6 +4,7 @@ import {
   CreateProductController,
   GetAllProductsController,
   GetProductByIdController,
+  UpdateProductController,
 } from './';
 
 @Module({
@@ -12,6 +13,7 @@ import {
     CreateProductController,
     GetAllProductsController,
     GetProductByIdController,
+    UpdateProductController,
   ],
 })
 export class ProductsControllersModule {}

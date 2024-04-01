@@ -3,19 +3,31 @@ import {
   CreateProductRepository,
   GetAllProductsRepository,
   GetProductByIdRepository,
+  UpdateProductRepository,
 } from 'src/data/protocols/products/';
 import { CreateProductDTO } from 'src/domain/DTOS/create-product-dto';
 import { Product } from 'src/domain/models/products/product';
 import { PrismaService } from '../../config/prisma.service';
+import { UpdateProductDTO } from 'src/domain/DTOS/update-product-dto';
 
 @Injectable()
 export class ProductPrismaRepository
   implements
     CreateProductRepository,
     GetAllProductsRepository,
-    GetProductByIdRepository
+    GetProductByIdRepository,
+    UpdateProductRepository
 {
   constructor(private readonly prisma: PrismaService) {}
+
+  async update(id: string, product: UpdateProductDTO): Promise<Product> {
+    const updatedProduct = await this.prisma.product.update({
+      where: { id },
+      data: product,
+    });
+
+    return updatedProduct;
+  }
 
   async getById(id: string): Promise<Product> {
     const product = await this.prisma.product.findFirst({

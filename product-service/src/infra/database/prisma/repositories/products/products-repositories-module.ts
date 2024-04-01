@@ -4,6 +4,7 @@ import {
   CreateProductRepository,
   GetAllProductsRepository,
   GetProductByIdRepository,
+  UpdateProductRepository,
 } from 'src/data/protocols/products';
 import { ProductPrismaRepository } from './products-prisma-repository';
 
@@ -22,11 +23,16 @@ import { ProductPrismaRepository } from './products-prisma-repository';
       provide: GetProductByIdRepository,
       useClass: ProductPrismaRepository,
     },
+    {
+      provide: UpdateProductRepository,
+      useClass: ProductPrismaRepository,
+    },
   ],
   exports: [
     CreateProductRepository,
     GetAllProductsRepository,
     GetProductByIdRepository,
+    UpdateProductRepository,
   ],
 })
 export class ProductsRepositoriesModule {}
