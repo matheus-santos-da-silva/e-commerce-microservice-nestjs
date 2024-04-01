@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from '../../config/prisma.module';
-import { CreateProductRepository } from 'src/data/protocols/products';
+import {
+  CreateProductRepository,
+  GetAllProductsRepository,
+} from 'src/data/protocols/products';
 import { ProductPrismaRepository } from './products-prisma-repository';
 
 @Module({
@@ -10,7 +13,11 @@ import { ProductPrismaRepository } from './products-prisma-repository';
       provide: CreateProductRepository,
       useClass: ProductPrismaRepository,
     },
+    {
+      provide: GetAllProductsRepository,
+      useClass: ProductPrismaRepository,
+    },
   ],
-  exports: [CreateProductRepository],
+  exports: [CreateProductRepository, GetAllProductsRepository],
 })
 export class ProductsRepositoriesModule {}

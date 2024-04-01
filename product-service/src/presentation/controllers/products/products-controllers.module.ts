@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ProductsUseCasesModule } from 'src/data/use-cases-implementation/products/products-use-cases-module';
-import { CreateProductController } from './create-product-controller';
+import { CreateProductController, GetAllProductsController } from './';
 
 @Module({
   imports: [ProductsUseCasesModule],
-  controllers: [CreateProductController],
+  controllers: [CreateProductController, GetAllProductsController],
 })
 export class ProductsControllersModule {}
