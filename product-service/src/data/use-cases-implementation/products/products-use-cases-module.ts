@@ -1,7 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ProductsRepositoriesModule } from 'src/infra/database/prisma/repositories/products/products-repositories-module';
-import { CreateProduct, GetAllProducts } from 'src/domain/use-cases/products';
-import { CreateProductImplementation, GetAllProductsImplementation } from './';
+import {
+  CreateProduct,
+  GetAllProducts,
+  GetProductById,
+} from 'src/domain/use-cases/products';
+import {
+  CreateProductImplementation,
+  GetAllProductsImplementation,
+  GetProductByIdImplementation,
+} from './';
 
 @Module({
   imports: [ProductsRepositoriesModule],
@@ -14,7 +22,11 @@ import { CreateProductImplementation, GetAllProductsImplementation } from './';
       provide: GetAllProducts,
       useClass: GetAllProductsImplementation,
     },
+    {
+      provide: GetProductById,
+      useClass: GetProductByIdImplementation,
+    },
   ],
-  exports: [CreateProduct, GetAllProducts],
+  exports: [CreateProduct, GetAllProducts, GetProductById],
 })
 export class ProductsUseCasesModule {}

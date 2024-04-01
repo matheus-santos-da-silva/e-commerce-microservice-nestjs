@@ -3,6 +3,7 @@ import { PrismaModule } from '../../config/prisma.module';
 import {
   CreateProductRepository,
   GetAllProductsRepository,
+  GetProductByIdRepository,
 } from 'src/data/protocols/products';
 import { ProductPrismaRepository } from './products-prisma-repository';
 
@@ -17,7 +18,15 @@ import { ProductPrismaRepository } from './products-prisma-repository';
       provide: GetAllProductsRepository,
       useClass: ProductPrismaRepository,
     },
+    {
+      provide: GetProductByIdRepository,
+      useClass: ProductPrismaRepository,
+    },
   ],
-  exports: [CreateProductRepository, GetAllProductsRepository],
+  exports: [
+    CreateProductRepository,
+    GetAllProductsRepository,
+    GetProductByIdRepository,
+  ],
 })
 export class ProductsRepositoriesModule {}
