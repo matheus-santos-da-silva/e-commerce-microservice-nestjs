@@ -20,7 +20,7 @@ import { generateProductCode } from 'src/data/utils/generate-product-code';
 export class CreateProductController {
   constructor(private readonly createProduct: CreateProduct) {}
 
-  @ApiOperation({ summary: 'Create User' })
+  @ApiOperation({ summary: 'Create Product' })
   @ApiResponse({
     status: 201,
     description: 'Created',
