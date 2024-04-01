@@ -9,7 +9,7 @@ import { HttpNotFoundError } from 'src/presentation/swagger/http-errors';
 export class GetProductByIdController {
   constructor(private readonly getProductById: GetProductById) {}
 
-  @ApiOperation({ summary: 'Get User By Id' })
+  @ApiOperation({ summary: 'Get Product By Id' })
   @ApiResponse({
     status: 200,
     description: 'Success',
