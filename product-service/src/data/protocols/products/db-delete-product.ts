@@ -1,3 +1,3 @@
-export abstract class DeleteProduct {
+export abstract class DeleteProductRepository {
   abstract delete(id: string): Promise<void>;
 }

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ProductsUseCasesModule } from 'src/data/use-cases-implementation/products/products-use-cases-module';
 import {
   CreateProductController,
+  DeleteProductController,
   GetAllProductsController,
   GetProductByIdController,
   UpdateProductController,
@@ -14,6 +15,7 @@ import {
     GetAllProductsController,
     GetProductByIdController,
     UpdateProductController,
+    DeleteProductController,
   ],
 })
 export class ProductsControllersModule {}

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { PrismaModule } from '../../config/prisma.module';
 import {
   CreateProductRepository,
+  DeleteProductRepository,
   GetAllProductsRepository,
   GetProductByIdRepository,
   UpdateProductRepository,
@@ -27,12 +28,17 @@ import { ProductPrismaRepository } from './products-prisma-repository';
       provide: UpdateProductRepository,
       useClass: ProductPrismaRepository,
     },
+    {
+      provide: DeleteProductRepository,
+      useClass: ProductPrismaRepository,
+    },
   ],
   exports: [
     CreateProductRepository,
     GetAllProductsRepository,
     GetProductByIdRepository,
     UpdateProductRepository,
+    DeleteProductRepository,
   ],
 })
 export class ProductsRepositoriesModule {}
