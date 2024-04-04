@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCustomerRepository } from 'src/data/protocols/customer/db-create-customer';
+import { CreateCustomerRepository } from 'src/data/protocols/customers/db-create-customer';
 import { CreateCustomerDTO } from 'src/domain/DTOS/create-customer-dto';
 import { CreateCustomer } from 'src/domain/use-cases/external/create-customer';
 
