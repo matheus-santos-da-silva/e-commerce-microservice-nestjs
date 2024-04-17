@@ -13,6 +13,7 @@ import { Product } from 'src/domain/models/products/product';
 import { PrismaService } from '../../config/prisma.service';
 import { UpdateProductDTO } from 'src/domain/DTOS/update-product-dto';
 import { BuyProductsDTO } from 'src/domain/DTOS/buy-products-dto';
+import { BuyProductsImplementationDTO } from 'src/domain/DTOS/buy-products-implementation-dto';
 
 @Injectable()
 export class ProductPrismaRepository
@@ -32,7 +33,7 @@ export class ProductPrismaRepository
     return product;
   }
 
-  async buy({ products }: BuyProductsDTO): Promise<void> {
+  async buy({ products }: BuyProductsImplementationDTO): Promise<void> {
     for (const product of products) {
       const oldQuantity = await this.prisma.product.findFirst({
         where: { code: product.code },
