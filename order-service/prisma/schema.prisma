@@ -8,12 +8,13 @@ datasource db {
 }
 
 model Order {
-  id         String       @id @default(uuid())
-  customer   Customer     @relation(fields: [customerId], references: [id])
-  customerId String
-  orderItems OrderItems[]
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt()
+  id          String       @id @default(uuid())
+  customer    Customer     @relation(fields: [customerId], references: [id])
+  customerId  String
+  orderItems  OrderItems[]
+  orderAmount Float
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt()
 
   @@map("orders")
 }
