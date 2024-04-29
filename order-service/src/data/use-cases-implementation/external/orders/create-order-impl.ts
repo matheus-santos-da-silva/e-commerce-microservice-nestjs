@@ -4,6 +4,7 @@ import { CreateOrderRepository } from 'src/data/protocols/orders';
 import { GetProductByCodeRepository } from 'src/data/protocols/products';
 import { CreateOrderDTO } from 'src/domain/DTOS/create-order-dto';
 import { CreateOrder } from 'src/domain/use-cases/external/orders';
+import { PubSubService } from 'src/infra/messaging/redis/pubsub.service';
 
 @Injectable()
 export class CreateOrderImplementation implements CreateOrder {
@@ -11,6 +12,7 @@ export class CreateOrderImplementation implements CreateOrder {
     private readonly repository: CreateOrderRepository,
     private readonly getCustomerById: GetCustomerByIdRepository,
     private readonly getProductByCode: GetProductByCodeRepository,
+    private readonly messagingService: PubSubService,
   ) {}
 
   async create({ customerId, products }: CreateOrderDTO): Promise<void> {
@@ -32,5 +34,14 @@ export class CreateOrderImplementation implements CreateOrder {
       orderItems: await Promise.all(productsArray),
       orderAmount,
     });
+
+    await this.messagingService.publish(
+      'create-order',
+      {
+        customer,
+        order: await Promise.all(productsArray),
+      },
+      'orders',
+    );
   }
 }
