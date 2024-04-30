@@ -46,6 +46,8 @@ model Product {
   code       String       @unique
   price      Float
   OrderItems OrderItems[]
+
+  @@map("products")
 }
 
 enum PaymentTypeEnum {
