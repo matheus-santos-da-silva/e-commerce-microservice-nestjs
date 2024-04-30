@@ -35,12 +35,14 @@ export class BuyProductImplementation implements BuyProducts {
     await this.repository.buy({
       products: fields.products,
       customerId: fields.customerId,
+      paymentType: fields.paymentType,
     });
     await this.messagingService.publish(
       'buy-products',
       {
         products: fields.products,
         customerId: fields.customerId,
+        paymentType: fields.paymentType,
       },
       'products',
     );

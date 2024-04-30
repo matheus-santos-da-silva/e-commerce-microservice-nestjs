@@ -2,11 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsString,
   ValidateNested,
 } from 'class-validator';
+import { PaymentTypeEnum } from 'src/domain/enums/payment-type-enum';
 
 export class BuyProductDTO {
   @ApiProperty({ example: '8474624259399925000' })
@@ -41,4 +43,9 @@ export class BuyProductsVM {
   @ValidateNested({ each: true })
   @Type(() => BuyProductDTO)
   products: [{ code: string; name: string; price: number; quantity: number }];
+
+  @ApiProperty({ example: 'PIX' })
+  @IsEnum(PaymentTypeEnum)
+  @IsNotEmpty()
+  paymentType: PaymentTypeEnum;
 }

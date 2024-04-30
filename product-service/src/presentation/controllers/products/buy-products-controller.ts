@@ -30,10 +30,10 @@ export class BuyProductsController {
   @HttpCode(200)
   async execute(
     @Body()
-    { products }: BuyProductsVM,
+    { products, paymentType }: BuyProductsVM,
     @Headers('Authorization') authorization: string,
   ): Promise<void> {
     const id = await ValidateAndReturnToken(authorization);
-    await this.buyProducts.buy({ products, customerId: id });
+    await this.buyProducts.buy({ products, customerId: id, paymentType });
   }
 }
