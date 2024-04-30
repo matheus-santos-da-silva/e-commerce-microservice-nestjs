@@ -51,6 +51,7 @@ export class OrdersPrismaRepository
     customer,
     orderItems,
     orderAmount,
+    paymentType,
   }: CreateOrderInfraDTO): Promise<void> {
     const order = await this.prisma.order.create({
       data: {
@@ -58,6 +59,7 @@ export class OrdersPrismaRepository
           connect: { id: customer.id },
         },
         orderAmount,
+        paymentType,
       },
     });
 

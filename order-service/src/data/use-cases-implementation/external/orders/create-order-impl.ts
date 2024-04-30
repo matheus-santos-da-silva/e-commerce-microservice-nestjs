@@ -15,7 +15,11 @@ export class CreateOrderImplementation implements CreateOrder {
     private readonly messagingService: PubSubService,
   ) {}
 
-  async create({ customerId, products }: CreateOrderDTO): Promise<void> {
+  async create({
+    customerId,
+    products,
+    paymentType,
+  }: CreateOrderDTO): Promise<void> {
     let orderAmount: number = 0;
     const customer = await this.getCustomerById.getById(customerId);
     const productsArray = products.map(async (product) => {
@@ -33,6 +37,7 @@ export class CreateOrderImplementation implements CreateOrder {
       customer,
       orderItems: await Promise.all(productsArray),
       orderAmount,
+      paymentType,
     });
 
     await this.messagingService.publish(

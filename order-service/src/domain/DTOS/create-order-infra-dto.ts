@@ -1,3 +1,4 @@
+import { PaymentTypeEnum } from '../enums/payment-type-enum';
 import { Customer } from '../models/customers/customer';
 
 export class CreateOrderInfraDTO {
@@ -10,4 +11,5 @@ export class CreateOrderInfraDTO {
     quantity: number;
   }[];
   orderAmount: number;
+  paymentType: PaymentTypeEnum;
 }

@@ -8,14 +8,15 @@ datasource db {
 }
 
 model Order {
-  id            String       @id @default(uuid())
-  customer      Customer     @relation(fields: [customerId], references: [id])
+  id            String          @id @default(uuid())
+  customer      Customer        @relation(fields: [customerId], references: [id])
   customerId    String
   orderItems    OrderItems[]
   orderAmount   Float
-  paymentStatus String       @default("PENDING")
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt()
+  paymentStatus String          @default("PENDING")
+  paymentType   PaymentTypeEnum
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt()
 
   @@map("orders")
 }
@@ -45,4 +46,11 @@ model Product {
   code       String       @unique
   price      Float
   OrderItems OrderItems[]
+}
+
+enum PaymentTypeEnum {
+  PIX
+  CREDIT_CARD
+  DEBIT_CARD
+  PAYPAL
 }
